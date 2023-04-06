@@ -15,7 +15,7 @@ def get_value():
     print(convert[0].text)
     curreu = str(round(float(convert[0].text.replace(',', '.'))*1.05, 2))
     currdin = str(round(float(convert[0].text.replace(',', '.'))*1.05/117, 2))
-    fin = "Актуальный курс Евро (EUR):\n" + curreu + "\n" + "Актуальный курс Сербского Динара(RSD):\n"+ currdin
+    fin = "Актуальный курс Евро (EUR):\n" + curreu + "\n" + "Актуальный курс Сербского Динара(RSD):\n"+ currdin + "\n" + "!Минимальная сумма обмена 100 евро или 10000 динаров!"
     return fin
 
 
