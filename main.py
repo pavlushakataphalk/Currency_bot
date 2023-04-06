@@ -15,7 +15,7 @@ def get_value():
     print(convert[0].text)
     curreu = str(round(float(convert[0].text.replace(',', '.'))*1.05, 2))
     currdin = str(round(float(convert[0].text.replace(',', '.'))*1.05/117, 2))
-    fin = "Актуальный курс Евро (EUR):\n" + curreu + "\n" + "Актуальный курс Сербского Динара(RSD):\n"+ currdin + "\n" + "!Минимальная сумма обмена 100 евро или 10000 динаров!"
+    fin = "Актуальный курс Евро (EUR):\n" + curreu + "\n" + "Актуальный курс Сербского Динара(RSD):\n"+ currdin
     return fin
 
 
@@ -40,7 +40,7 @@ async def send_welcome(query: types.CallbackQuery):
     if query.message.text != get_value():
      await query.message.edit_text(get_value(), reply_markup=mykb)
 
-    date = datetime.datetime.now().strftime("%d/%m/%Y, %H:%M")
+    date = (datetime.datetime.now()+datetime.timedelta(hours=-3)).strftime("%d/%m/%Y, %H:%M")
     await query.answer("Курс обновлен " + date)
     await query.message.edit_text(get_value(), reply_markup=mykb)
 
