@@ -21,7 +21,7 @@ def get_value():
 
 get_value()
 
-API_TOKEN = '6285702618:AAHbyuoUBGiJ0v9fmc0QZvZvAwNyFYKkNIo'
+API_TOKEN = '5653760842:AAHlXeWckFJj_OVHixjSt1ySw9ps6yPYH_g'
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
