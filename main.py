@@ -40,7 +40,7 @@ async def send_welcome(query: types.CallbackQuery):
     if query.message.text != get_value():
      await query.message.edit_text(get_value(), reply_markup=mykb)
 
-    date = (datetime.datetime.now()+datetime.timedelta(hours=-3)).strftime("%d/%m/%Y, %H:%M")
+    date = (datetime.datetime.now()+datetime.timedelta(hours=-1)).strftime("%d/%m/%Y, %H:%M")
     await query.answer("Курс обновлен " + date)
     await query.message.edit_text(get_value(), reply_markup=mykb)
 
