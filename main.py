@@ -2,12 +2,8 @@ from requests import get
 from time import time
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from selenium import webdriver
 import datetime
 
-from selenium.webdriver.common.by import By
-
-#from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 EURO_RUB = 'https://www.vbr.ru/banki/bks-bank/kurs-valut/eur/?utm_referrer=https%3A%2F%2Fwww.google.com%2F'
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
@@ -192,7 +188,7 @@ async def back(query: types.CallbackQuery):
 async def get_list(query: types.CallbackQuery):
     print('\n'.join(users_list_1hr))
     if query.from_user.username == 'pashaborsch' or query.from_user.username == 'Computer_craft':
-        await query.message.answer("Пользователи (" + str(users_counter) +") за последний час:" + "\n" + '\n'.join(users_list_1hr))
+        await query.message.answer("Пользователи (" + str(users_counter) +") за последний час:" + "\n" + '\n'.join(users_list_modified))
 
 
 @dp.message_handler()
