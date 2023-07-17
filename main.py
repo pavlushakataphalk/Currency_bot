@@ -1,28 +1,44 @@
-import asyncio
-import requests
+from requests import get
+from time import time
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from bs4 import BeautifulSoup
+from selenium import webdriver
 import datetime
+
+from selenium.webdriver.common.by import By
+
 #from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-EURO_RUB = 'https://alfaforex.ru/analytics/analytics-rates/eur/'
+EURO_RUB = 'https://www.vbr.ru/banki/bks-bank/kurs-valut/eur/?utm_referrer=https%3A%2F%2Fwww.google.com%2F'
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
 
-
 coeff = 1.06
+rate = 0
+
+
+def getCurrentCourse():
+    params = {
+        "symbol": "EUR_RUB__TOD",
+        "classcode": "CETS",
+        "resolution": 60,
+        "from": round(time() - 72 * 3600),
+        "to": round(time())
+    }
+    response = get("https://api.bcs.ru/udfdatafeed/v1/history", params)
+    data = response.json()
+    if response:
+        result = data.get("c")[-1] if data.get("c") else None
+    else:
+        result = None
+    return result
+
 
 def get_value(coeff):
-    full_page = requests.get(EURO_RUB, headers=headers)
-    soup = BeautifulSoup(full_page.content, 'html.parser')
-    convert = soup.findAll("div", {"class": "course__value column column_lg-8 column_md-6 column_xs-4"})
-    print(convert[0].text)
-    beginning = datetime.time(9, 50)
-    closing = datetime.time(18, 50)
-    curreu = str(round(float(convert[0].text.replace(',', '.'))*coeff, 2))
-    currdin = str(round(float(convert[0].text.replace(',', '.'))*coeff/117, 2))
+    curreu = str(round(float(getCurrentCourse())*coeff, 2))
     fin = "@computer_craft выдаст наличные евро, с вас перевод на карту сбербанка или другого российского банка. Курс обмена евро - " + curreu + " руб.\n" + "\n" + "Возможен обмен в обратную сторону. Курс уточняйте.\n" + "\n" + "Покупаем криптовалюту. Курс уточняйте."
     return fin
+
+
 
 print(get_value(coeff))
 
@@ -126,6 +142,7 @@ async def cmd_start(message: types.Message):
 @dp.callback_query_handler(text="refresh")
 async def send_welcome(query: types.CallbackQuery):
     print(query.from_user.username)
+    mykb.clean()
     if query.message.text != get_value(coeff):
         await query.message.edit_text(get_value(coeff), reply_markup=mykb)
 
