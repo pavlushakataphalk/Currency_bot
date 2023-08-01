@@ -7,18 +7,17 @@ from bot import dp
 coeff = 1.06
 
 
-def get_value(coeff):
+def get_value(coeff): # the main function of currency bot which gets currency with request and changes it
     curreu = str(round(float(getCurrentCourse()) * coeff, 2))
-    fin = "@computer_craft выдаст наличные евро, с вас перевод на карту сбербанка или другого российского банка. Курс обмена евро - " + curreu + " руб.\n" + "\n" + "Возможен обмен в обратную сторону. Курс уточняйте.\n" + "\n" + "Покупаем криптовалюту. Курс уточняйте."
+    fin = "here should be your main message for user" + curreu
     return fin
 
 
-print(get_value(coeff))
+print(get_value(coeff)) //
 
 users_list_1hr = []
 users_list_modified = []
 users_counter = 0
-start = datetime.datetime.now()
 
 
 @dp.message_handler(commands=['start', 'refresh'])
@@ -29,12 +28,12 @@ async def cmd_start(message: types.Message):
     def users_list_check(message: types.Message):
         global users_counter
         k = 0
-        if message.from_user.username != 'pashaborsch' and message.from_user.username != 'Computer_craft' and message.from_user.username is not None:
+        if message.from_user.username != 'admin_telegram_nickname' and message.from_user.username is not None:
             for i in range(0, users_counter):
                 if message.from_user.username == users_list_1hr[i]:
                     k = k + 1
 
-        if k == 0 and message.from_user.username != 'pashaborsch' and message.from_user.username != 'Computer_craft' and message.from_user.username is not None:
+        if k == 0 and message.from_user.username != 'admin_telegram_nickname' and message.from_user.username is not None:
             users_list_1hr.append(message.from_user.username)
             users_list_modified.append("@" + message.from_user.username)
             users_counter = users_counter + 1
@@ -42,8 +41,8 @@ async def cmd_start(message: types.Message):
     users_list_check(message)
 
     print(message.from_user.username)
-    if message.from_user.username == 'pashaborsch' or message.from_user.username == 'Computer_craft':
-        await message.answer("Нажмите для доступа к админской панели:", reply_markup=mykb_adm)
+    if message.from_user.username == 'admin_telegram_nickname':
+        await message.answer("Press for access to the admin panel:", reply_markup=mykb_adm)
 
 
 @dp.callback_query_handler(text="refresh")
@@ -56,46 +55,45 @@ async def send_welcome(query: types.CallbackQuery):
     def users_list_check(query: types.CallbackQuery):
         global users_counter
         k = 0
-        if query.from_user.username != 'pashaborsch' or query.from_user.username != 'Computer_craft':
+        if query.from_user.username != 'admin_telegram_nickname' :
             for i in range(0, users_counter):
                 if query.from_user.username == users_list_1hr[i]:
                     k = k + 1
 
-        if k == 0 and query.from_user.username != 'pashaborsch' and query.from_user.username != 'Computer_craft' and query.from_user.username is not None:
+        if k == 0 and query.from_user.username != 'admin_telegram_nickname' and query.from_user.username is not None:
             users_list_1hr.append(query.from_user.username)
             users_list_modified.append("@" + query.from_user.username)
             users_counter = users_counter + 1
 
     users_list_check(query)
     date = (datetime.datetime.now() + datetime.timedelta(hours=-1)).strftime("%d/%m/%Y, %H:%M")
-    await query.answer("Курс обновлен " + date)
+    await query.answer("Exchange rate was refreshed " + date)
 
 
 @dp.callback_query_handler(text="adm")
 async def admin_kb(query: types.CallbackQuery):
     perc = round(((coeff - 1) * 100), 2)
-    await query.message.answer("Текущий коэффициент = " + str(perc) + "\n", reply_markup=panel)
+    await query.message.answer("Current coefficient = " + str(perc) + "\n", reply_markup=panel)
 
 
 @dp.callback_query_handler(text="edit")
 async def edit(query: types.CallbackQuery):
-    await query.message.answer("Введите новый коэффициент:")
+    await query.message.answer("Input new coefficient:")
 
 
 @dp.callback_query_handler(text="back")
 async def back(query: types.CallbackQuery):
     await query.message.answer(get_value(coeff), reply_markup=mykb)
-    print(query.from_user.username)
-    if query.from_user.username == 'pashaborsch' or query.from_user.username == 'Computer_craft':
-        await query.message.answer("Нажмите для доступа к админской панели:", reply_markup=mykb_adm)
+    if query.from_user.username == 'admin_telegram_nickname':
+        await query.message.answer("Press for access to the admin panel:", reply_markup=mykb_adm)
 
 
 @dp.callback_query_handler(text="get_list")
 async def get_list(query: types.CallbackQuery):
     print('\n'.join(users_list_1hr))
-    if query.from_user.username == 'pashaborsch' or query.from_user.username == 'Computer_craft':
+    if query.from_user.username == 'admin_telegram_nickname':
         await query.message.answer(
-            "Пользователи (" + str(users_counter) + ") за последний час:" + "\n" + '\n'.join(users_list_modified))
+            "Users (" + str(users_counter) + ") in the last hour:" + "\n" + '\n'.join(users_list_modified))
 
 
 @dp.message_handler()
@@ -111,9 +109,9 @@ async def coeff_handler(message: types.Message):
         global coeff
         coeff = float(message.text) / 100 + 1
         date = (datetime.datetime.now() + datetime.timedelta(hours=-1)).strftime("%d/%m/%Y, %H:%M")
-        await message.answer("Коэффициент обновлен " + date)
+        await message.answer("Coefficient was refreshed " + date)
     else:
-        await message.reply("Ошибка ввода, попробуйте еще раз:")
+        await message.reply("Input error, please try again:")
 
 
 if __name__ == '__main__':
