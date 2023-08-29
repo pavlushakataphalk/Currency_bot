@@ -1,5 +1,5 @@
 # Currency_bot
-This bot I have been developing for a several months from now. This is my very first Python project which was made not only for learning and studyung purposes, but also for the commercial reasons - I started it because my father needed some automatisation for his currency exchange buisness.
+This bot I have been developing for a several months from now. This is my very first Python project which was made not only for learning and studyung purposes, but also for the commercial reasons - I started it because my father needed some automation for his currency exchange buisness.
 I based this bot on aiogram library, which is not really difficult to use. I faced several issues during the process of development, but I've tried to fix them most efficiently, but I assume that the code isn't perfect at all.
 # Quick guide for containments of of the project:
 'main.py' includes all handlers for queries and messages and some important variables
