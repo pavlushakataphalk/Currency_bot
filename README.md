@@ -11,6 +11,6 @@ I based this bot on aiogram library, which is not really difficult to use. I fac
 'course_request.py' introduces function which makes request for the api of bank and gets required exchange rate
 
 
-This bot is active 24/7 for commercial purposes and can be shown if you are interested. Text me anytime in Telegram @pashaborsch. I'm also opened advices and tips about coding and I would be happy to discuss some programming topics with you.
+This bot is active 24/7 for commercial purposes and can be shown if you are interested. Text me anytime in Telegram @pashaborsch. I'm also opened for advices and tips about coding and I would be happy to discuss some programming topics with you.
 
 Warning: this app was developed with Aiogram 2.X, and will not start under 3.X version. Bot will be updated to 3.X soon.
