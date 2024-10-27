@@ -8,7 +8,7 @@ I based this bot on aiogram library, which is not really difficult to use. I fac
 
 'keyboards.py' is the builder for all keyboards and buttons
 
-'course_request.py' introduces function which makes request for the api of bank and gets required exchange rate
+'course_request.py' introduces function which makes request for the api of bank and gets required exchange rate. Note that API requires special access, so you won't be able to use it on your own machine.
 
 
 This bot is active 24/7 for commercial purposes and can be shown if you are interested. Text me anytime in Telegram @pashaborsch. I'm also opened for advices and tips about coding and I would be happy to discuss some programming topics with you.
