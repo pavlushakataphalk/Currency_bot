@@ -13,7 +13,7 @@ def get_value(coeff): # the main function of currency bot which gets currency wi
     return fin
 
 
-print(get_value(coeff)) //
+print(get_value(coeff))
 
 users_list_1hr = []
 users_list_modified = []
